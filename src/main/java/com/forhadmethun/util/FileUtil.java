@@ -1,11 +1,11 @@
 package com.forhadmethun.util;
 
+import com.forhadmethun.exception.FileReadException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,16 +24,16 @@ public class FileUtil {
                     var currentUserContent = getFileContent(currentUserResource);
                     userContentByUserId.put(user, currentUserContent);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new FileReadException(e.getMessage());
                 }
             });
         return userContentByUserId;
     }
 
     private static String getFileContent(Resource resource) throws IOException {
-        InputStream inputStream = resource.getInputStream();
+        var inputStream = resource.getInputStream();
         var reader = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         while (reader.ready()) {
             var line = reader.readLine();
             sb.append(line);

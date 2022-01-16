@@ -14,10 +14,6 @@ public enum UserType {
         this.type = type;
     }
 
-    public boolean equalsName(String otherName) {
-        return type.equals(otherName);
-    }
-
     @Override
     public String toString() {
         return this.type;
